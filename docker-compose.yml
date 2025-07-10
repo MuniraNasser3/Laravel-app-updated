@@ -1,0 +1,56 @@
+services:
+  # Backend - Laravel App
+  backend:
+    build:
+      context: ./workout-tracker
+    container_name: workout-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./workout-tracker:/var/www/html
+    depends_on:
+      - db
+
+  # Frontend - React (Vite)
+  frontend:
+    build:
+      context: ./workout-frontend
+    container_name: workout-frontend
+    ports:
+      - "3000:3000"
+    working_dir: /app
+    volumes:
+      - ./workout-frontend:/app
+    command: sh -c "npm install && npm run dev -- --host"
+    depends_on:
+      - backend
+
+  # Nginx (Optional - for serving Laravel or proxying frontend)
+  nginx:
+    image: nginx:1.25
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - backend
+
+  # PostgreSQL Database
+  db:
+    image: postgres:15
+    container_name: workout-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: workout_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: meme3199
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:
+
+
+
+
