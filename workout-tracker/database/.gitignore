@@ -1,1 +1,25 @@
+# SQLite databases
 *.sqlite*
+*.sqlite3
+
+# Laravel
+/vendor
+/.env
+.env.*.php
+.phpunit.result.cache
+/storage/*.key
+/public/storage
+/storage/logs
+/storage/framework
+
+# Node
+/node_modules
+
+# React / Vite
+dist
+*.log
+
+# Optional: OS/Editor-specific
+.DS_Store
+.idea
+.vscode
